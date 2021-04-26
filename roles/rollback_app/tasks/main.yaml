@@ -1,4 +1,5 @@
 ---
+
 - name: Curl and check output
   block:
     - name: Curl content
@@ -20,11 +21,4 @@
         icon_url: https://agardner.net/wp-content/uploads/2018/08/ansible-logo.png
         parse: 'full'
         
-- name: Send notification message via Slack
-  slack:
-    token: "TFBPBNB2L/B01VDHYTS82/vVS6nZUI5NlJrEAjPcN6OoX2"
-    msg: '{{ inventory_hostname }} completed'
-    username: 'Ansible sender'
-    channel: '#pr_baa'
-    color: good
-    parse: 'full'
+

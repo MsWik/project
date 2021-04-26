@@ -104,6 +104,27 @@
     - test
     - always
     
-- name: rollback_app
-  include_role:
-    name: rollback_app
+- name: Curl and check output
+  block:
+    - name: Curl content
+      uri:
+        url: "http://{{ app_fqdn }}"
+        return_content: yes
+      register: content
+      failed_when: "'Jean-Philippe Lang' not in this.content"
+    - name: Print content
+      debug:
+        msg: "{{ content }}"
+  rescue:
+    - name: rollback_app
+      include_role:
+        name: rollback_app 
+    
+- name: Send notification message via Slack
+  slack:
+    token: "TFBPBNB2L/B01VDHYTS82/vVS6nZUI5NlJrEAjPcN6OoX2"
+    msg: '{{ inventory_hostname }} completed'
+    username: 'Ansible sender'
+    channel: '#pr_baa'
+    color: good
+    parse: 'full'
