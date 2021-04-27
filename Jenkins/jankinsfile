@@ -1,32 +1,17 @@
-  
-properties([disableConcurrentBuilds()])
-pipeline{
-  agent any
-
-  options {
-      buildDiscarder(logRotator(numToKeepStr: '5', artifactNumToKeepStr: '5'))
-      timestamps()
-  }
-
-  stages{
-    stage('Clone git repo'){
-      steps{
-        git credentialsId: 'GitLast', 
-            url: 'https://github.com/MsWik/project'
-      }
-    }
-    stage('Docker deploy via ansible'){
-      steps{
-        ansiblePlaybook disableHostKeyChecking: true, installation: 'ansible', inventory: 'hosts.yaml', playbook: 'redmine.yaml'
-      }
-    }
-  }
-  post {
-        success {
-            slackSend (color: '#00FF00', message: "SUCCESSFULL: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
+pipeline {
+    agent any
+    stages {
+        stage('git') {
+            steps{
+                git branch: 'main', url: 'https://github.com/MsWik/project'
+            }
+            
         }
-        failure {
-            slackSend (color: '#FF0000', message: "FAILED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
+        stage('Execute Ansible') {
+            steps{
+               ansiblePlaybook credentialsId: 'df2d4b2a-6344-495e-aba4-7ca80eb056b4', installation: 'ansible', inventory: 'hosts.yaml', playbook: 'redmine.yaml'
+            }
+            
         }
     }
 }

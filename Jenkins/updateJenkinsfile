@@ -1,25 +1,17 @@
-
-properties([disableConcurrentBuilds()])
-pipeline{
+pipeline {
     agent any
-
-    options {
-      buildDiscarder(logRotator(numToKeepStr: '5', artifactNumToKeepStr: '5'))
-      timestamps()
-    }
-
-    stages{
-        stage('Clone git repo'){
+    stages {
+        stage('git') {
             steps{
-              git credentialsId: 'GitLast', 
-                url: 'https://github.com/MsWik/project'
+                git branch: 'main', url: 'https://github.com/MsWik/project'
             }
+            
         }
-
-        stage('Run ansible update'){
+        stage('Execute Ansible Update') {
             steps{
-                ansiblePlaybook disableHostKeyChecking: true, installation: 'ansible', inventory: 'hosts.yaml', playbook: 'aplication_update.yaml'
+               ansiblePlaybook credentialsId: 'df2d4b2a-6344-495e-aba4-7ca80eb056b4', installation: 'ansible', inventory: 'hosts.yaml', playbook: 'aplication_update.yaml'
             }
+            
         }
     }
 }
