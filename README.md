@@ -38,3 +38,4 @@ All piplene and playbook have integration with Slack.
 
 Links:
 [GitHub Repository](https://github.com/MsWik/project)
+[Project](http://redmine-2.sa/)
