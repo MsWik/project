@@ -13,7 +13,8 @@ pipeline {
         }
         stage('Execute Ansible') {
             steps{
-               ansiblePlaybook credentialsId: 'df2d4b2a-6344-495e-aba4-7ca80eb056b4', installation: 'ansible', inventory: 'hosts.yaml', playbook: 'redmine.yaml'
+				 ansiblePlaybook credentialsId: '49c05a2c-22b6-493f-931c-46aeab8ead57', installation: 'ansible2', inventory: 'hosts.yaml', playbook: 'redmine.yaml', sudo: true
+               ##ansiblePlaybook credentialsId: 'df2d4b2a-6344-495e-aba4-7ca80eb056b4', installation: 'ansible', inventory: 'hosts.yaml', playbook: 'redmine.yaml'
             }
             
         }
