@@ -28,6 +28,11 @@ Deployment flows short description:
 First deploy - User push code to GitHub, via Jenkins start pipeline, which clone repo and start ansible playbook automaticaly.
 
 App update start manual from Jenkins pipeline. 
+jankinsfile - start the deployment procedure
+updateJenkinsfile - start the update procedure
+
+the update actually goes through the removal of previously installed packages
+
 
 All piplene and playbook have integration with Slack.
 
